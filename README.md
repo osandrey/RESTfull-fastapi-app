@@ -9,7 +9,7 @@ ALEMBIC MIGRATIONS:
 alembic revision --autogenerate -m 'add auth4'
 alembic upgrade head 
 
-
+Passes`:
 andrii@google.com
 andrii123
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbmRyaWlAZ29vZ2xlLmNvbSIsImlhdCI6MTY4NzY5OTc2NywiZXhwIjoxNjg3NzAwNjY3LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.Z9PzYgbFRCaxoiqF_Y8dq_U3VsHxt5JkSonFSWzJg-E
