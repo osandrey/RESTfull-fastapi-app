@@ -37,7 +37,7 @@
 #     contacts = relationship("Contact", backref='users')
 
 
-from sqlalchemy import Column, Date, Integer, String, ForeignKey
+from sqlalchemy import Column, Date, Integer, String, ForeignKey, Boolean
 from sqlalchemy.sql.sqltypes import DateTime
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.sql import func
@@ -74,5 +74,8 @@ class User(Base):
     created_at = Column('created_at', DateTime, default=func.now())
     avatar = Column(String(255), nullable=True)
     refresh_token = Column(String(255), nullable=True)
+    confirmed = Column(Boolean, default=False)
+    bunned = Column(Boolean, default=False)
+    ip = Column(String, unique=False, default="localhost")
 
-    # contacts = relationship("Contact", backref='user', foreign_keys=[Contact.user_id])
+
