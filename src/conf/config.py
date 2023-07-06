@@ -2,7 +2,7 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-
+    """Configuration settings for the application."""
     sqlalchemy_database_url: str
     secret_key: str
     algorithm: str
@@ -23,4 +23,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
