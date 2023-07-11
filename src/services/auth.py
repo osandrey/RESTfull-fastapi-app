@@ -9,38 +9,37 @@ from sqlalchemy.orm import Session
 
 from src.database.db import get_db
 from src.repository import users as repository_users
-from src.conf.config import settings
+from src.config.config import settings
 
 
 class Auth:
     """
-        Handles authentication-related operations and configurations.
+    Handles authentication-related operations and configurations.
 
-        Attributes:
-            pwd_context (CryptContext): The password hashing context using the bcrypt algorithm.
-            SECRET_KEY (str): The secret key used for authentication and token signing.
-            ALGORITHM (str): The algorithm used for token encoding and decoding.
-            oauth2_scheme (OAuth2PasswordBearer): The OAuth2 password bearer scheme for token authentication.
+    Attributes:
+    pwd_context (CryptContext): The password hashing context using the bcrypt algorithm.
+    SECRET_KEY (str): The secret key used for authentication and token signing.
+    ALGORITHM (str): The algorithm used for token encoding and decoding.
+    oauth2_scheme (OAuth2PasswordBearer): The OAuth2 password bearer scheme for token authentication.
 
-        Methods:
-            verify_password(plain_password: str, hashed_password: str) -> bool:
-                Verify if a plain password matches a hashed password.
-            get_password_hash(password: str) -> str:
-                Generate a password hash from a plain password.
-            create_access_token(data: dict, expires_delta: Optional[float] = None) -> str:
-                Generate a new access token.
-            create_refresh_token(data: dict, expires_delta: Optional[float] = None) -> str:
-                Generate a new refresh token.
-            decode_refresh_token(refresh_token: str) -> str:
-                Decode and validate a refresh token, returning the email associated with it.
-            get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
-                Get the current authenticated user based on the provided access token.
-            create_email_token(data: dict) -> str:
-                Generate an email token for email verification.
-            get_email_from_token(token: str) -> str:
-                Get the email from an email token.
-
-        """
+    Methods:
+    verify_password(plain_password: str, hashed_password: str) -> bool:
+    Verify if a plain password matches a hashed password.
+    get_password_hash(password: str) -> str:
+    Generate a password hash from a plain password.
+    create_access_token(data: dict, expires_delta: Optional[float] = None) -> str:
+    Generate a new access token.
+    create_refresh_token(data: dict, expires_delta: Optional[float] = None) -> str:
+    Generate a new refresh token.
+    decode_refresh_token(refresh_token: str) -> str:
+    Decode and validate a refresh token, returning the email associated with it.
+    get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
+    Get the current authenticated user based on the provided access token.
+    create_email_token(data: dict) -> str:
+    Generate an email token for email verification.
+    get_email_from_token(token: str) -> str:
+    Get the email from an email token.
+    """
 
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     SECRET_KEY = settings.secret_key
@@ -77,10 +76,10 @@ class Auth:
     async def create_access_token(self, data: dict, expires_delta: Optional[float] = None):
         """
         The create_access_token function creates a new access token.
-            Args:
-                data (dict): A dictionary containing the claims to be encoded in the JWT.
-                expires_delta (Optional[float]): An optional parameter specifying how long, in seconds,
-                    the access token should last before expiring. If not specified, it defaults to 15 minutes.
+        Args:
+        data (dict): A dictionary containing the claims to be encoded in the JWT.
+        expires_delta (Optional[float]): An optional parameter specifying how long, in seconds,
+        the access token should last before expiring. If not specified, it defaults to 15 minutes.
 
         :param self: Refer to the class itself
         :param data: dict: Pass the data that will be encoded into the jwt
@@ -101,9 +100,9 @@ class Auth:
     async def create_refresh_token(self, data: dict, expires_delta: Optional[float] = None):
         """
         The create_refresh_token function creates a refresh token for the user.
-            Args:
-                data (dict): A dictionary containing the user's id and username.
-                expires_delta (Optional[float]): The number of seconds until the token expires, defaults to None.
+        Args:
+        data (dict): A dictionary containing the user's id and username.
+        expires_delta (Optional[float]): The number of seconds until the token expires, defaults to None.
 
         :param self: Represent the instance of the class
         :param data: dict: Pass in the user's id, username, and email
@@ -144,8 +143,8 @@ class Auth:
     async def get_current_user(self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
         """
         The get_current_user function is a dependency that will be used in the
-            protected endpoints. It takes a token as an argument and returns the user
-            if it's valid, otherwise raises an HTTPException with status code 401.
+        protected endpoints. It takes a token as an argument and returns the user
+        if it's valid, otherwise raises an HTTPException with status code 401.
 
         :param self: Represent the instance of a class
         :param token: str: Pass the token to the function

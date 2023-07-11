@@ -40,7 +40,6 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         result = await get_contact(contact_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
-
     async def test_find_contact_found(self):
         contact = Contact()
         self.session.query().filter().filter().all.return_value = contact
@@ -48,9 +47,9 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         print(result)
         self.assertEqual(result, contact)
 
-
     async def test_create_contact(self):
-        body = ContactBase(firstname="test", lastname="test-name", phone_number="test-phone-number", email="test-email", description="test contact", date_of_birth=datetime.date(1990, 1, 1))
+        body = ContactBase(firstname="test", lastname="test-name", phone_number="test-phone-number", email="test-email",
+                           description="test contact", date_of_birth=datetime.date(1990, 1, 1))
 
         user = User(id=1)
         result = await create_contact(body=body, user=self.user, db=self.session)
@@ -74,19 +73,33 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         result = await remove_contact(contact_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
+
+
     async def test_update_contact_found(self):
-        body = ContactUpdate(firstname="test", lastname="test-name",
+        body_update = ContactUpdate(firstname="b-test",
+                             lastname="test-name",
                              phone_number="test-phone-number",
                              email="test-email",
                              description="test contact",
                              date_of_birth=datetime.date(1990, 1, 1))
         user = User(id=1)
-        contact = Contact(user_id=user.id)
+        print(f'USER:{user.id}')
+        body = ContactBase(firstname="a-test",
+            lastname="a-test-name",
+            phone_number="a-test-phone-number",
+            email="a-test-email",
+            description="a-test contact",
+            date_of_birth=datetime.date(1889, 2, 1))
+
+        contact = await create_contact(body, user=user, db=self.session)
+        print(f"CONTACT:{contact.firstname}")
         self.session.query().filter().first.return_value = contact
         self.session.query().filter().all.return_value = user
         self.session.commit.return_value = None
-        result = await update_contact(contact_id=1, body=body, user=self.user, db=self.session)
-        self.assertEqual(result, contact)
+        result = await update_contact(contact_id=1, body=body_update, user=user, db=self.session)
+        print(f"RESULT:{result.user_id}")
+        self.assertEqual(result.firstname, contact.firstname)
+        self.assertEqual(result.user_id, contact.user_id)
 
     async def test_update_contact_not_found(self):
         body = ContactUpdate(firstname="test", lastname="test-name",
@@ -99,26 +112,18 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         result = await update_contact(contact_id=1, body=body, user=self.user, db=self.session)
         self.assertIsNone(result)
 
-
-    """
-    firstname="test",
-    lastname="test-name",
-    phone_number="test-phone-number",
-    email="test-email",
-    description="test contact",
-    date_of_birth=datetime.date(1990, 1, 1)
-    """
     async def test_get_contact_bd_found(self):
         contact = Contact(firstname="test",
-        lastname="test-name",
-        phone_number="test-phone-number",
-        email="test-email",
-        description="test contact",
-        date_of_birth=datetime.date(1990, 7, 9))
+                          lastname="test-name",
+                          phone_number="test-phone-number",
+                          email="test-email",
+                          description="test contact",
+                          date_of_birth=datetime.date(1990, 7, 9))
         # self.session.query.return_value.filter.return_value.first.return_value = contact
         self.session.query().filter().all.return_value = [contact]
         result = await find_contacts_bday(days=7, user=self.user, db=self.session)
         self.assertEqual(result, [contact])
+        self.assertEqual(result[0].firstname, contact.firstname)
 
 
 if __name__ == '__main__':

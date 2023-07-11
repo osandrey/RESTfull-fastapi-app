@@ -28,10 +28,10 @@ async def get_contacts(skip: int, limit: int, user: User, db: Session) -> List[C
 async def find_contacts_bday(days, user: User, db: Session) -> List[Contact]:
     """
     The find_contacts_bday function takes in a number of days and returns all contacts whose birthdays fall within that range.
-        Args:
-            days (int): The number of days to look ahead for upcoming birthdays.
-            user (User): The User object associated with the current session. This is used to filter out contacts belonging to other users.
-            db (Session): A database Session object, which is used by SQLAlchemy's ORM methods for querying the database and retrieving results.
+    Args:
+    days (int): The number of days to look ahead for upcoming birthdays.
+    user (User): The User object associated with the current session. This is used to filter out contacts belonging to other users.
+    db (Session): A database Session object, which is used by SQLAlchemy's ORM methods for querying the database and retrieving results.
 
     :param days: Specify the number of days to look ahead for birthdays
     :param user: User: Get the user_id from the user object
@@ -64,7 +64,6 @@ async def find_contacts(
     The find_contacts function is used to search for contacts in the database.
     It takes a user object, and optional firstname, lastname, and email parameters.
     The function returns a list of Contact objects that match the search criteria.
-
     :param db: Session: Pass the database session to the function
     :param user: User: Get the user id from the database
     :param firstname: str: Filter the results by firstname
@@ -90,10 +89,10 @@ async def find_contacts(
 async def get_contact(contact_id: int,user: User, db: Session) -> Type[Contact] | None:
     """
     The get_contact function returns a contact from the database.
-        Args:
-            contact_id (int): The id of the contact to be retrieved.
-            user (User): The user who is requesting this information. This is used for authorization purposes, as only contacts belonging to that user can be accessed by them.
-            db (Session): A connection to the database which will allow us to query it and retrieve data from it using SQLAlchemy's ORM methods and classes such as Contact, User, etc...
+    Args:
+    contact_id (int): The id of the contact to be retrieved.
+    user (User): The user who is requesting this information. This is used for authorization purposes, as only contacts belonging to that user can be accessed by them.
+    db (Session): A connection to the database which will allow us to query it and retrieve data from it using SQLAlchemy's ORM methods and classes such as Contact, User, etc...
 
     :param contact_id: int: Specify the id of the contact to be retrieved
     :param user: User: Get the user from the database
@@ -132,10 +131,10 @@ async def create_contact(body: ContactBase, user: User, db: Session) -> Contact:
 async def remove_contact(contact_id: int, user: User, db: Session) -> Contact | None:
     """
     The remove_contact function removes a contact from the database.
-        Args:
-            contact_id (int): The id of the contact to be removed.
-            user (User): The user who is removing the contact. This is used to ensure that only contacts belonging to this user are removed, and not other users' contacts by mistake or maliciously.
-            db (Session): A session object for interacting with our database
+    Args:
+    contact_id (int): The id of the contact to be removed.
+    user (User): The user who is removing the contact. This is used to ensure that only contacts belonging to this user are removed, and not other users' contacts by mistake or maliciously.
+    db (Session): A session object for interacting with our database
 
     :param contact_id: int: Identify the contact to be removed
     :param user: User: Get the user_id from the user object
@@ -153,10 +152,10 @@ async def remove_contact(contact_id: int, user: User, db: Session) -> Contact | 
 async def update_contact(contact_id: int, user: User, body: ContactUpdate, db: Session) -> Contact | None:
     """
     The update_contact function updates a contact in the database.
-        Args:
-            contact_id (int): The id of the contact to update.
-            user (User): The user who is updating the contact. This is used for authorization purposes, as only contacts belonging to this user can be updated by them.
-            body (ContactUpdate): A ContactUpdate object containing all of the information that will be updated on this particular Contact object in our database.
+    Args:
+    contact_id (int): The id of the contact to update.
+    user (User): The user who is updating the contact. This is used for authorization purposes, as only contacts belonging to this user can be updated by them.
+    body (ContactUpdate): A ContactUpdate object containing all of the information that will be updated on this particular Contact object in our database.
 
     :param contact_id: int: Identify the contact to be deleted
     :param user: User: Check if the user is authenticated and authorized to perform this action

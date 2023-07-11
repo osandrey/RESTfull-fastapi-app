@@ -8,14 +8,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from src.conf.config import settings
+from src.config.config import settings
 from src.routes import contacts, auth
 from src.repository.users import get_user_by_bunned_field
 
 app = FastAPI(title="OSA-SWAGGER", swagger_ui_parameters={"operationsSorter": "method"})
 user_agent_ban_list = [r"Python-urllib"]
-BUNNED_IPS = [ip_address(x.ip) for x in get_user_by_bunned_field() if get_user_by_bunned_field()]
-print(f'BaNNED_IPS: {BUNNED_IPS}')
+
 app.include_router(auth.router, prefix='/api')
 app.include_router(contacts.router, prefix='/api')
 
@@ -66,10 +65,14 @@ async def limit_access_by_ip(request: Request, call_next: Callable):
     :param call_next: Callable: Pass the next function in the pipeline
     :return: A json-response object
     """
-    ip = ip_address(request.client.host)
-    if ip in BUNNED_IPS:
-        print(f'I am in BANNED LIST {ip}')
-        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={"detail": "Not allowed IP address"})
+    BUNNED_IPS = [ip_address(x.ip) for x in get_user_by_bunned_field() if get_user_by_bunned_field()]
+    try:
+        ip = ip_address(request.client.host)
+        if ip in BUNNED_IPS:
+            print(f'I am in BANNED LIST {ip}')
+            return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={"detail": "Not allowed IP address"})
+    except ValueError as err:
+        print(err)
     response = await call_next(request)
     return response
 

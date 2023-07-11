@@ -4,7 +4,7 @@ docker run --name my_hw_postgres_container -e POSTGRES_PASSWORD=567234 -e POSTGR
 
 uvicorn start server: ```uvicorn main:app --host localhost --port 8000 --reload```
 
-
+pytest-cov: ```pytest --cov=. --cov-report html tests/```
 ALEMBIC MIGRATIONS:
 alembic revision --autogenerate -m 'add auth4'
 alembic upgrade head 
