@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 @pytest.fixture()
 def token(client, user, session, monkeypatch):
     mock_send_email = MagicMock()
-    monkeypatch.setattr("src.services.email_service.send_email", mock_send_email)
+    monkeypatch.setattr("src.routes.auth.send_email", mock_send_email)
     client.post("/api/auth/signup", json=user)
     current_user: User = session.query(User).filter(User.email == user.get('email')).first()
     current_user.confirmed = True
@@ -33,7 +33,7 @@ def token(client, user, session, monkeypatch):
 
 def test_create_user(client, user, session, monkeypatch):
     mock_send_email = MagicMock()
-    monkeypatch.setattr("src.services.email_service.send_email", mock_send_email)
+    monkeypatch.setattr("src.routes.auth.send_email", mock_send_email)
     response = client.post("/api/auth/signup", json=user).json()
 
     current_user: User = session.query(User).filter(User.email == user.get('email')).first()
@@ -45,7 +45,7 @@ def test_create_user(client, user, session, monkeypatch):
 
 def test_user_ip_checker(client, user, session, monkeypatch, client_ip="127.0.0.1"):
     mock_send_email = MagicMock()
-    monkeypatch.setattr("src.services.email_service.send_email", mock_send_email)
+    monkeypatch.setattr("src.routes.auth.send_email", mock_send_email)
 
     response = client.post("/api/auth/signup", json=user)
     assert response.status_code == 409
