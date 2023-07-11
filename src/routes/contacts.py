@@ -42,10 +42,9 @@ async def find_contacts(
 ) -> List[Contact]:
     """
     The find_contacts function is used to find contacts in the database.
-        It takes a firstname, lastname and email as parameters.
-        The user parameter is used to get the current user from the auth_service module.
-        The db parameter is used to get a connection with the database from our dependency function.
-
+    It takes a firstname, lastname and email as parameters.
+    The user parameter is used to get the current user from the auth_service module.
+    The db parameter is used to get a connection with the database from our dependency function.
     :param firstname: str: Filter the contacts by firstname
     :param lastname: str: Filter the contacts by lastname
     :param email: str: Search for a contact by email
@@ -66,8 +65,7 @@ async def find_bday_contacts(days: int, user: User = Depends(auth_service.get_cu
 
     """
     The find_bday_contacts function returns a list of contacts whose birthday is within the next X days.
-        The function takes in an integer value for the number of days and returns a list of contact objects.
-
+    The function takes in an integer value for the number of days and returns a list of contact objects.
     :param days: int: Specify the number of days in which a contact's birthday falls
     :param user: User: Get the current user
     :param db: Session: Get the database session from the dependency
@@ -85,7 +83,6 @@ async def read_contact(contact_id: int, user: User = Depends(auth_service.get_cu
     """
     The read_contact function is used to retrieve a single contact from the database.
     It takes in an integer representing the ID of the contact, and returns a Contact object.
-
     :param contact_id: int: Specify the contact id to retrieve
     :param user: User: Get the current user from the auth_service
     :param db: Session: Pass the database session to the function
@@ -102,9 +99,8 @@ async def read_contact(contact_id: int, user: User = Depends(auth_service.get_cu
 async def create_contact(body: ContactBase, user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     """
     The create_contact function creates a new contact in the database.
-        The function takes a ContactBase object as input, which is validated by pydantic.
-        The user who created the contact is also passed to the function and stored in the database.
-
+    The function takes a ContactBase object as input, which is validated by pydantic.
+    The user who created the contact is also passed to the function and stored in the database.
     :param body: ContactBase: Get the body of the request
     :param user: User: Get the user from the auth_service
     :param db: Session: Access the database
@@ -118,9 +114,8 @@ async def create_contact(body: ContactBase, user: User = Depends(auth_service.ge
 async def update_contact(body: ContactUpdate, contact_id: int, user: User = Depends(auth_service.get_current_user),db: Session = Depends(get_db)):
     """
     The update_contact function updates a contact in the database.
-        The function takes an id, and a body containing the updated information for that contact.
-        It then uses the update_contact method from repository_contacts to update that contact in the database.
-
+    The function takes an id, and a body containing the updated information for that contact.
+    It then uses the update_contact method from repository_contacts to update that contact in the database.
     :param body: ContactUpdate: Pass the contact details to be updated
     :param contact_id: int: Identify the contact that will be deleted
     :param user: User: Get the current user from the auth_service
@@ -138,7 +133,6 @@ async def update_contact(body: ContactUpdate, contact_id: int, user: User = Depe
 async def remove_contact(contact_id: int, user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     """
     The remove_contact function removes a contact from the database.
-
     :param contact_id: int: Specify the id of the contact to be removed
     :param user: User: Get the user object from the auth_service
     :param db: Session: Pass the database session to the repository layer

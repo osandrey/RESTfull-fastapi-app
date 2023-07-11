@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Depends, status, Security, Backgro
 from fastapi.security import OAuth2PasswordRequestForm, HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
-from src.conf.config import settings
+from src.config.config import settings
 from src.database.db import get_db
 from src.database.models import User
 from src.schemas import UserModel, UserResponse, TokenModel, RequestEmail, UserDb
@@ -51,8 +51,8 @@ async def signup(body: UserModel, background_tasks: BackgroundTasks, request: Re
 async def login(body: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """
     The login function is used to authenticate a user.
-        It takes the username and password from the request body,
-        verifies them against the database, and returns an access token if successful.
+    It takes the username and password from the request body,
+    verifies them against the database, and returns an access token if successful.
 
     :param body: OAuth2PasswordRequestForm: Get the username and password from the request body
     :param db: Session: Get the database session
@@ -77,9 +77,9 @@ async def login(body: OAuth2PasswordRequestForm = Depends(), db: Session = Depen
 async def refresh_token(credentials: HTTPAuthorizationCredentials = Security(security), db: Session = Depends(get_db)):
     """
     The refresh_token function is used to refresh the access token.
-        The function takes in a refresh token and returns an access_token, a new refresh_token, and the type of token.
-        If there is no valid user associated with the given email address or if there are any errors during decoding
-        or creating tokens then an HTTPException will be raised.
+    The function takes in a refresh token and returns an access_token, a new refresh_token, and the type of token.
+    If there is no valid user associated with the given email address or if there are any errors during decoding
+    or creating tokens then an HTTPException will be raised.
 
     :param credentials: HTTPAuthorizationCredentials: Get the credentials from the http request
     :param db: Session: Get the database session
@@ -103,11 +103,11 @@ async def refresh_token(credentials: HTTPAuthorizationCredentials = Security(sec
 async def confirmed_email(token: str, db: Session = Depends(get_db)):
     """
     The confirmed_email function is used to confirm a user's email address.
-        It takes the token from the URL and uses it to get the user's email address.
-        The function then checks if there is a user with that email in our database, and if not, returns an error message.
-        If there is a user with that email in our database, we check whether their account has already been confirmed or not.
-            If it has been confirmed already, we return another error message saying so; otherwise we call repository_users'
-            confirmed_email function which sets the 'confirmed' field of that particular record to
+    It takes the token from the URL and uses it to get the user's email address.
+    The function then checks if there is a user with that email in our database, and if not, returns an error message.
+    If there is a user with that email in our database, we check whether their account has already been confirmed or not.
+    If it has been confirmed already, we return another error message saying so; otherwise we call repository_users'
+    confirmed_email function which sets the 'confirmed' field of that particular record to
 
     :param token: str: Get the token from the url
     :param db: Session: Get the database session
@@ -155,7 +155,7 @@ async def request_email(body: RequestEmail, background_tasks: BackgroundTasks, r
 async def bun_user_ip_by_id(user_id: int, db: Session = Depends(get_db)):
     """
     The bun_user_ip_by_id function is used to ban a user by their ID.
-        The function takes in the user_id as an argument and returns a message indicating that the user was successfully banned.
+    The function takes in the user_id as an argument and returns a message indicating that the user was successfully banned.
 
     :param user_id: int: Get the user_id from the url
     :param db: Session: Access the database
@@ -173,7 +173,7 @@ async def bun_user_ip_by_id(user_id: int, db: Session = Depends(get_db)):
 async def unban_user_ip_by_id(user_id: int, db: Session = Depends(get_db)):
     """
     The unban_user_ip_by_id function is used to unban a user by their ID.
-        The function takes in the user_id as an argument and returns a message indicating that the user was successfully unbanned.
+    The function takes in the user_id as an argument and returns a message indicating that the user was successfully unbanned.
 
     :param user_id: int: Get the user id from the url
     :param db: Session: Pass the database connection to the repository layer
@@ -205,10 +205,10 @@ async def update_avatar_user(file: UploadFile = File(), current_user: User = Dep
                              db: Session = Depends(get_db)):
     """
     The update_avatar_user function is used to update the avatar of a user.
-        The function takes in an UploadFile object, which contains the file that will be uploaded to Cloudinary.
-        It also takes in a User object, which is obtained from auth_service.get_current_user(). This ensures that only
-        authenticated users can access this endpoint and change their own avatars (and not anyone else's). Finally, it
-        takes in a Session object for database access.
+    The function takes in an UploadFile object, which contains the file that will be uploaded to Cloudinary.
+    It also takes in a User object, which is obtained from auth_service.get_current_user(). This ensures that only
+    authenticated users can access this endpoint and change their own avatars (and not anyone else's). Finally, it
+    takes in a Session object for database access.
 
     :param file: UploadFile: Get the file from the request
     :param current_user: User: Get the user that is currently logged in
