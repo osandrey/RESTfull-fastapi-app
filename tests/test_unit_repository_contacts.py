@@ -118,7 +118,7 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
                           phone_number="test-phone-number",
                           email="test-email",
                           description="test contact",
-                          date_of_birth=datetime.date(1990, 7, 9))
+                          date_of_birth=datetime.date(1990, 7, 13))
         # self.session.query.return_value.filter.return_value.first.return_value = contact
         self.session.query().filter().all.return_value = [contact]
         result = await find_contacts_bday(days=7, user=self.user, db=self.session)

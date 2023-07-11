@@ -1,3 +1,4 @@
+from datetime import datetime
 
 import pytest
 from fastapi.testclient import TestClient
@@ -51,3 +52,12 @@ def user():
     return {"username": "Andrii", "email": "osann@example.com", "password": "andrii123"}
 
 
+
+@pytest.fixture(scope='module')
+def contact():
+    return {'firstname':"test",
+          'lastname':"test-name",
+          'phone_number':"test-phone-number",
+          'email':"test-email",
+          'description':"test contact",
+          'date_of_birth':datetime.date(1990, 7, 9)}
