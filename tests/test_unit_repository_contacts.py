@@ -1,7 +1,8 @@
 import datetime
 import unittest
 from unittest.mock import MagicMock
-
+import asyncio
+import asynctest as asynctest
 from sqlalchemy.orm import Session
 
 from src.database.models import Contact, User
@@ -17,7 +18,7 @@ from src.repository.contacts import (
 )
 
 
-class TestContacts(unittest.IsolatedAsyncioTestCase):
+class TestContacts(unittest.IsolatedAsyncioTestCase, asynctest.TestCase):
 
     def setUp(self):
         self.session = MagicMock(spec=Session)
